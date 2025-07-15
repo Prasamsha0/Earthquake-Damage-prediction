@@ -41,3 +41,4 @@ def predict(data: InputData):
 @app.get("/")
 def home():
     return {"message": "Welcome to Earthquake Severity Prediction API"}
+
