@@ -1,11 +1,13 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import joblib
 
-# Load model
+# Load the model
 model = joblib.load("earthquake_severity_model.joblib")
 
-# Define label map
+# Label map
 label_map = {
     0: 'Highest',
     1: 'High',
@@ -16,17 +18,28 @@ label_map = {
     6: 'Very Low'
 }
 
+# FastAPI app
 app = FastAPI()
 
-class InputData(BaseModel):
+# Mount static folder
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Serve HTML file directly
+@app.get("/")
+def read_index():
+    return FileResponse("static/home.html")
+
+# Define input model for JSON
+class PredictionInput(BaseModel):
     Hazard_Intensity: float
     Exposure: float
     Housing: float
     Poverty: float
     Vulnerability: float
 
+# Handle form POST (now expects JSON)
 @app.post("/predict")
-def predict(data: InputData):
+async def predict(data: PredictionInput):
     input_data = [
         data.Hazard_Intensity,
         data.Exposure,
@@ -38,7 +51,3 @@ def predict(data: InputData):
     predicted_class = int(prediction[0])
     predicted_label = label_map.get(predicted_class, "Unknown")
     return {"predicted_severity": predicted_label}
-@app.get("/")
-def home():
-    return {"message": "Welcome to Earthquake Severity Prediction API"}
-

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Earthquake Severity Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 30px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        input[type="number"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e0ffe0;
+            border: 1px solid #4CAF50;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Earthquake Severity Prediction</h2>
+        <form id="predict-form">
+            <label>Hazard Intensity:</label>
+            <input type="number" step="any" id="hazard" required><br>
+
+            <label>Exposure:</label>
+            <input type="number" step="any" id="exposure" required><br>
+
+            <label>Housing:</label>
+            <input type="number" step="any" id="housing" required><br>
+
+            <label>Poverty:</label>
+            <input type="number" step="any" id="poverty" required><br>
+
+            <label>Vulnerability:</label>
+            <input type="number" step="any" id="vulnerability" required><br>
+
+            <button type="submit">Predict Severity</button>
+            </form>
+
+            <div id="result"></div>
+
+            <script src="/static/head.js"></script>
+
+</body>
+</html>
